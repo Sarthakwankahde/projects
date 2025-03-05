@@ -1,0 +1,52 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Upload } from "lucide-react";
+
+const PortfolioImageDescription = () => {
+  const [image, setImage] = useState(null);
+  const [description, setDescription] = useState("");
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      generateDescription();
+    }
+  };
+
+  const generateDescription = () => {
+    // Mock description generation (replace with AI model if needed)
+    setDescription("This is a beautiful image showcasing creativity and vision.");
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-4 p-6">
+      <Card className="w-full max-w-md p-4 text-center">
+        <CardContent>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+            id="upload"
+          />
+          <label htmlFor="upload" className="cursor-pointer">
+            <Button variant="outline">
+              <Upload className="mr-2" /> Upload Image
+            </Button>
+          </label>
+          {image && (
+            <div className="mt-4">
+              <img src={image} alt="Uploaded" className="rounded-lg w-full" />
+              <p className="mt-2 text-gray-700">{description}</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default PortfolioImageDescription;
